@@ -25,10 +25,9 @@ def web_crawler_dfs(start_url, visited=None, db_connection=None):
         # Ambil paragraf pertama
         paragraph = soup.find('p').text.strip() if soup.find('p') else "Tidak ada paragraf"
         
-        # Simpan ke database
         if db_connection:
             cursor = db_connection.cursor()
-            sql = "INSERT INTO websites (url, title, paragraph) VALUES (%s, %s, %s)"
+            sql = "INSERT INTO websites (url, judul_artikel, paragraph) VALUES (%s, %s, %s)"
             values = (start_url, title, paragraph)
             cursor.execute(sql, values)
             db_connection.commit()
@@ -59,7 +58,7 @@ def create_database_connection():
             CREATE TABLE IF NOT EXISTS websites (
                 id INT AUTO_INCREMENT PRIMARY KEY,
                 url VARCHAR(255),
-                title VARCHAR(255),
+                judul_artikel VARCHAR(255),
                 paragraph TEXT
             )
         """)
